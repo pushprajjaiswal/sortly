@@ -9,6 +9,7 @@ import { shouldShowInterstitial } from './src/ads/config';
 import HomeScreen from './src/screens/HomeScreen';
 import GameScreen, { WIN_COINS } from './src/screens/GameScreen';
 import ShopScreen from './src/screens/ShopScreen';
+import { initializeSfx, setSoundEnabled } from './src/audio/sfx';
 
 type Screen = 'home' | 'game' | 'shop';
 
@@ -19,8 +20,10 @@ export default function App() {
 
   useEffect(() => {
     loadProgress().then((p) => {
-      progressRef.current = p;
-      setProgress(p);
+      const loaded = { ...DEFAULT_PROGRESS, ...p, soundOn: p.soundOn ?? true };
+      progressRef.current = loaded;
+      setProgress(loaded);
+      void initializeSfx(loaded.soundOn);
     });
     initAds();
   }, []);
@@ -40,6 +43,12 @@ export default function App() {
     },
     [update],
   );
+
+  const toggleSound = useCallback(() => {
+    const soundOn = !(progressRef.current.soundOn ?? true);
+    setSoundEnabled(soundOn);
+    update((p) => ({ ...p, soundOn }));
+  }, [update]);
 
   const onWin = useCallback(
     async (earned: number) => {
@@ -72,7 +81,15 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar style={theme.id === 'candy' ? 'dark' : 'light'} />
       {screen === 'home' && (
-        <HomeScreen theme={theme} level={progress.level} coins={progress.coins} onPlay={() => setScreen('game')} onShop={() => setScreen('shop')} />
+        <HomeScreen
+          theme={theme}
+          level={progress.level}
+          coins={progress.coins}
+          soundOn={progress.soundOn ?? true}
+          onToggleSound={toggleSound}
+          onPlay={() => setScreen('game')}
+          onShop={() => setScreen('shop')}
+        />
       )}
       {screen === 'game' && (
         <GameScreen
@@ -80,6 +97,8 @@ export default function App() {
           level={progress.level}
           theme={theme}
           coins={progress.coins}
+          soundOn={progress.soundOn ?? true}
+          onToggleSound={toggleSound}
           spendCoins={spendCoins}
           onWin={onWin}
           onHome={() => setScreen('home')}

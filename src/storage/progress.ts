@@ -6,6 +6,7 @@ export type Progress = {
   themeId: string;
   ownedThemes: string[];
   levelsSinceAd: number; // for interstitial pacing
+  soundOn?: boolean;
 };
 
 export const DEFAULT_PROGRESS: Progress = {
@@ -14,6 +15,7 @@ export const DEFAULT_PROGRESS: Progress = {
   themeId: 'classic',
   ownedThemes: ['classic'],
   levelsSinceAd: 0,
+  soundOn: true,
 };
 
 const KEY = 'sortly/progress/v1';

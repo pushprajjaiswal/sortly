@@ -6,14 +6,40 @@ import { formatCoins } from '../utils/formatCoins';
 
 const LOGO = [0, 1, 2, 3, 4, 5];
 
-export default function HomeScreen({ theme, level, coins, onPlay, onShop }: { theme: Theme; level: number; coins: number; onPlay: () => void; onShop: () => void }) {
+export default function HomeScreen({
+  theme,
+  level,
+  coins,
+  soundOn,
+  onToggleSound,
+  onPlay,
+  onShop,
+}: {
+  theme: Theme;
+  level: number;
+  coins: number;
+  soundOn: boolean;
+  onToggleSound: () => void;
+  onPlay: () => void;
+  onShop: () => void;
+}) {
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.root, { backgroundColor: theme.background, paddingTop: insets.top + 16, paddingBottom: insets.bottom + 24 }]}>
-      <View style={[styles.coins, { backgroundColor: theme.surface }]}>
-        <Text selectable={false} numberOfLines={1} style={{ color: theme.accent, fontWeight: '800', fontSize: 16 }}>
-          🪙 {formatCoins(coins)}
-        </Text>
+      <View style={styles.topRight}>
+        <GameButton
+          iconOnly
+          label={soundOn ? 'Sound on' : 'Sound off'}
+          accessibilityLabel={soundOn ? 'Turn sound off' : 'Turn sound on'}
+          icon={soundOn ? '🔊' : '🔇'}
+          onPress={onToggleSound}
+          theme={theme}
+        />
+        <View style={[styles.coins, { backgroundColor: theme.surface }]}>
+          <Text selectable={false} numberOfLines={1} style={{ color: theme.accent, fontWeight: '800', fontSize: 16 }}>
+            🪙 {formatCoins(coins)}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.center}>
@@ -36,7 +62,8 @@ export default function HomeScreen({ theme, level, coins, onPlay, onShop }: { th
 
 const styles = StyleSheet.create({
   root: { flex: 1, paddingHorizontal: 24 },
-  coins: { alignSelf: 'flex-end', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 14 },
+  topRight: { alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', gap: 8 },
+  coins: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 14 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   logoBalls: { flexDirection: 'row', gap: 8, marginBottom: 20 },
   ball: { width: 34, height: 34, borderRadius: 17 },

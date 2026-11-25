@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Theme } from '../theme/themes';
+import { play } from '../audio/sfx';
 
 type Props = {
   label: string;
@@ -12,14 +13,32 @@ type Props = {
   big?: boolean;
   compact?: boolean;
   iconOnly?: boolean;
+  accessibilityLabel?: string;
 };
 
-export default function GameButton({ label, icon, badge, onPress, theme, variant = 'ghost', disabled, big, compact, iconOnly }: Props) {
+export default function GameButton({
+  label,
+  icon,
+  badge,
+  onPress,
+  theme,
+  variant = 'ghost',
+  disabled,
+  big,
+  compact,
+  iconOnly,
+  accessibilityLabel,
+}: Props) {
   const primary = variant === 'primary';
   return (
     <Pressable
-      onPress={onPress}
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? label}
+      onPress={() => {
+        play('tap');
+        onPress();
+      }}
       style={({ pressed }) => [
         styles.btn,
         big && styles.big,

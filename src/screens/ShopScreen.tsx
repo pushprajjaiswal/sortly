@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { THEMES, Theme } from '../theme/themes';
 import GameButton from '../components/GameButton';
 import { formatCoins } from '../utils/formatCoins';
+import { play } from '../audio/sfx';
 
 type Props = {
   theme: Theme;
@@ -65,7 +66,10 @@ export default function ShopScreen({ theme, coins, owned, onSelect, onBuy, onBac
           return (
             <Pressable
               key={t.id}
-              onPress={() => pressTheme(t.id, t.price, isOwned)}
+              onPress={() => {
+                play('tap');
+                pressTheme(t.id, t.price, isOwned);
+              }}
               style={[styles.card, { backgroundColor: t.background, borderColor: active ? theme.accent : 'transparent' }]}
             >
               <View style={{ flex: 1 }}>
