@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ball Sort: Tube Master",
     "slug": "sortly",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -41,6 +41,14 @@
           "dark": {
             "image": "./assets/splash-icon.png",
             "backgroundColor": "#16213E"
+          }
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraProguardRules": "-keep class androidx.work.** { *; }\n-keep class androidx.room.** { *; }\n-keep class * extends androidx.room.RoomDatabase { <init>(); *; }\n-keep class androidx.work.impl.WorkDatabase_Impl { *; }\n-keep class androidx.startup.** { *; }\n-dontwarn androidx.work.**\n-dontwarn androidx.room.**"
           }
         }
       ]
