@@ -1,6 +1,12 @@
-# Sortly: Ball Sort Puzzle
+# Ball Sort: Tube Master
 
 A hybrid-casual ball sort game made with React Native + Expo (SDK 58), with AdMob monetization.
+
+## App identity
+- Display name: Ball Sort: Tube Master
+- Android package: `com.binarybeast.ballsort`
+- iOS bundle identifier: `com.binarybeast.ballsort`
+- EAS slug: `sortly` (keep this unchanged because it is linked to the EAS project)
 
 ## Features
 - Unlimited levels. Each level is generated from a fixed seed, so everyone gets the same puzzle, and every level is checked by a solver so it can always be finished
@@ -13,7 +19,7 @@ A hybrid-casual ball sort game made with React Native + Expo (SDK 58), with AdMo
 ## Run it
 ```bash
 npm install
-npm test             # checks that levels 1–200 can be solved
+npm test             # checks game rules, level solvability and palette contrast
 npm run typecheck
 npx expo start --web # quickest way to try it (ads are simulated)
 ```
@@ -24,13 +30,25 @@ npx eas-cli@latest build --profile development --platform android   # install th
 npx expo start --dev-client
 ```
 
-## Before publishing to the Play Store
-1. Create an app in AdMob. Replace the test app IDs in `app.json` (plugin `androidAppId`/`iosAppId`) and the ad unit IDs in `src/ads/config.ts` with your own.
-2. Change `android.package` / `ios.bundleIdentifier` in `app.json` (it is currently `com.yourname.sortly`).
-3. Make your own icon and splash screen in `assets/`.
-4. Add a UMP consent form for EU/UK users (see the TODO in `src/ads/ads.native.ts`) and publish a privacy policy URL.
-5. Build and submit: `npx eas-cli@latest build --profile production --platform android`, then `eas submit`.
-6. In the Play Console: fill in the Data safety form (the AdMob SDK collects the device ad ID) and set the content rating.
+## AdMob configuration
+- Android app ID: `ca-app-pub-3264759639979045~7856980612`
+- Android banner unit: `ca-app-pub-3264759639979045/5861372666`
+- Android interstitial unit: `ca-app-pub-3264759639979045/7282265543`
+- Android rewarded unit: `ca-app-pub-3264759639979045/2959877154`
+- Development builds use Google's `TestIds`; `TEST_DEVICE_IDS` can enable test ads on a physical device in a release build.
+- To get a device's hashed test ID, inspect the Google Mobile Ads SDK message in `adb logcat`, then add the ID to `TEST_DEVICE_IDS` in `src/ads/config.ts`.
+- Placeholder production unit IDs are skipped with a warning instead of being requested.
+
+> TODO before an iOS release: replace Google's sample `iosAppId` in `app.json` and the placeholder iOS ad unit IDs in `src/ads/config.ts` with the production IDs.
+
+The app also needs a UMP consent form for EU/UK users before launch (see the TODO in `src/ads/ads.native.ts`) and a published privacy policy URL.
+
+## Release checklist
+1. `npx eas-cli@latest build --profile production --platform android`
+2. Upload the .aab to Play Console → Internal testing
+3. Add your phone's hashed ID to `TEST_DEVICE_IDS`, and never tap your own live ads
+4. app-ads.txt on the developer website (TODO)
+5. Closed test with 12+ testers for 14 days, then Apply for production
 
 ## Project layout
 ```

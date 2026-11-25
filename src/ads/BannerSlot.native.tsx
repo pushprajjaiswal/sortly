@@ -6,9 +6,11 @@ export default function BannerSlot() {
   if (!adsAvailable) return null;
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { BannerAd, BannerAdSize } = require('react-native-google-mobile-ads') as typeof import('react-native-google-mobile-ads');
+  const id = unitId('banner');
+  if (!id) return null;
   return (
     <View style={{ alignItems: 'center' }}>
-      <BannerAd unitId={unitId('banner')} size={BannerAdSize.LARGE_ANCHORED_ADAPTIVE_BANNER} />
+      <BannerAd unitId={id} size={BannerAdSize.LARGE_ANCHORED_ADAPTIVE_BANNER} />
     </View>
   );
 }

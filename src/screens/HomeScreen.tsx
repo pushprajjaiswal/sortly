@@ -22,8 +22,8 @@ export default function HomeScreen({ theme, level, coins, onPlay, onShop }: { th
             <View key={c} style={[styles.ball, { backgroundColor: theme.balls[c] }]} />
           ))}
         </View>
-        <Text style={[styles.title, { color: theme.text }]}>Sortly</Text>
-        <Text style={[styles.tag, { color: theme.subtext }]}>Sort the balls. Relax your mind.</Text>
+        <Text style={[styles.title, { color: theme.text }]}>Ball Sort</Text>
+        <Text style={[styles.tag, { color: theme.subtext }]}>Tube Master</Text>
       </View>
 
       <View style={styles.actions}>

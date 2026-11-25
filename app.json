@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sortly: Ball Sort Puzzle",
+    "name": "Ball Sort: Tube Master",
     "slug": "sortly",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourname.sortly"
+      "bundleIdentifier": "com.binarybeast.ballsort"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.yourname.sortly"
+      "package": "com.binarybeast.ballsort"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -27,10 +27,15 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "androidAppId": "ca-app-pub-3264759639979045~7856980612",
           "iosAppId": "ca-app-pub-3940256099942544~1458002511"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "adfda91f-043e-4070-97fe-7f6d80ca4920"
+      }
+    }
   }
 }
